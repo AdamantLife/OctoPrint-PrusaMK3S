@@ -2701,16 +2701,16 @@ class Settings:
 
 def _default_basedir(applicationName):
     # taken from http://stackoverflow.com/questions/1084697/how-do-i-store-desktop-application-data-in-a-cross-platform-way-for-python
-    applicationName+="PrusaMK3S"
+    NAME = "PrusaMK3S"
 
     if sys.platform == "darwin":
         import appdirs
 
         return appdirs.user_data_dir(applicationName, "")
     elif sys.platform == "win32":
-        return os.path.join(os.environ["APPDATA"], applicationName)
+        return os.path.join(os.environ["APPDATA"], applicationName, NAME)
     else:
-        return os.path.expanduser(os.path.join("~", "." + applicationName.lower()))
+        return os.path.expanduser(os.path.join("~", "." + applicationName.lower(), NAME))
 
 
 def _validate_folder(folder, create=True, check_writable=True, deep_check_writable=False):
