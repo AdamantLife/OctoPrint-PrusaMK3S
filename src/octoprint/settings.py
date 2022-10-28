@@ -176,7 +176,7 @@ default_settings = {
     },
     "server": {
         "host": None,
-        "port": 5000,
+        "port": 5002,
         "firstRun": True,
         "startOnceInSafeMode": False,
         "ignoreIncompleteStartup": False,
@@ -2341,6 +2341,8 @@ class Settings:
 
 def _default_basedir(applicationName):
     # taken from http://stackoverflow.com/questions/1084697/how-do-i-store-desktop-application-data-in-a-cross-platform-way-for-python
+    applicationName+="PrusaMK3S"
+
     if sys.platform == "darwin":
         import appdirs
 
