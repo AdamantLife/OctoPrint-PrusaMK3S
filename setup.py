@@ -30,70 +30,46 @@ SETUP_REQUIRES = []
 
 # Requirements for our application
 bundled_plugins = [
-    "OctoPrint-FileCheck>=2024.11.12",
-    "OctoPrint-FirmwareCheck>=2025.5.14",
-    "OctoPrint-PiSupport>=2023.10.10",
+    "OctoPrint-FileCheck>=2021.2.23",
+    "OctoPrint-FirmwareCheck>=2021.10.11",
+    "OctoPrint-PiSupport>=2022.6.13",
 ]
 core_deps = [
-    "argon2-cffi>=23.1.0",
-    "Babel>=2.16,<2.17 ; python_version>='3.8'",  # breaking changes can happen on minor version increases
-    "cachelib>=0.13.0,<0.14 ; python_version>='3.8'",
-    "Click>=8.1.8,!=8.2.0,<9",  # 8.2.0 has broken flags, see pallets/click#2894
-    "colorlog>=6.9.0,<7",
-    "emoji>=2.14.1,<3",
-    "feedparser>=6.0.11,<7",
-    "filetype>=1.2.0,<2",
-    "Flask-Assets>=2.1.0,<3",
-    "Flask-Babel>=4.0.0,<5 ; python_version>='3.8'",
-    "Flask-Login>=0.6.3,<0.7",  # breaking changes can happen on minor version increases
-    "Flask-Limiter>=3.8,<3.9 ; python_version>='3.8'",  # later versions require Python 3.9+
-    "flask>=3.0.3,<3.1 ; python_version>='3.8'",  # later versions require Python 3.9+, breaking changes can happen on minor version increases (with deprecation warnings)
-    "frozendict>=2.4.6,<3",
-    "limits<5",  # dependency of Flask-Limiter, v5 was released days before 1.11.0 and contains backwards incompatibilities, pinning upper limit out of caution
-    "markdown>=3.7,<3.8 ; python_version>='3.8'",
-    "netaddr>=1.3.0,<1.4",  # changelog hints at breaking changes on minor version increases
-    # "netifaces2>=0.0.21,<0.1",  # fork of netifaces in Rust, use rolled back due to build issues in some environments
-    "netifaces>=0.11.0,<0.12",
-    "packaging",
-    "libpass>=1.8.1,<2 ; python_version>='3.9'",  # replacement for unmaintained passlib
-    "passlib==1.7.4 ; python_version<'3.9'",
-    "pathvalidate>=3.2.1,<4",  # later versions require Python 3.9
-    "psutil>=6.1.1,<7",
-    "pydantic>=2.10.6,<3 ; python_version>='3.8'",
-    "pylru>=1.2.1,<2",
-    "pyserial>=3.5,<4",
-    "pytz",
-    "PyYAML>=6.0.2,<7 ; python_version>='3.8'",  # changelog at https://github.com/yaml/pyyaml/blob/master/CHANGES
-    "requests>=2.32.3,<3 ; python_version>='3.8'",
-    "sarge==0.1.7.post1",
-    "semantic_version>=2.10.0,<3",
-    "sentry-sdk>=2.20.0,<3",
-    "setuptools",
-    "tornado>=6.4.2,<6.5 ; python_version>='3.8'",
-    "watchdog>=4.0.2,<5 ; python_version>='3.8'",  # later versions require Python 3.9+
-    "websocket-client>=1.8.0,<1.9 ; python_version>='3.8'",  # breaking changes can happen on patch version increases, changelog incomplete
-    "werkzeug>=3.0.6,<3.1 ; python_version>='3.8'",  # later versions require Python 3.9+, breaking changes can happen on minor version increases
-    "wrapt>=1.17.2,<1.18 ; python_version>='3.8'",
-    "zeroconf>=0.136.2,<0.137 ; python_version>='3.8'",  # later versions require Python 3.9+, breaking changes can happen on minor version increases (despite semantic versioning)
-    "zipstream-ng>=1.8.0,<2.0.0",
-]
-core_deps_37 = [
-    "Babel>=2.14.0,<2.15 ; python_version<'3.8'",
-    "cachelib>=0.10.2,<0.11 ; python_version<'3.8'",
-    "Flask-Babel>=3.1.0,<4 ; python_version<'3.8'",
-    "Flask-Limiter>=3.5,<3.6 ; python_version<'3.8'",
-    "flask>=2.2.3,<2.3 ; python_version<'3.8'",
-    "importlib-metadata>=6.7.0 ; python_version<'3.8'",  # backport of importlib.metadata for python 3.7, later versions require Python 3.8+
-    "markdown>=3.4.4,<3.5 ; python_version<'3.8'",
-    "pydantic==1.10.16 ; python_version<'3.8'",  # to be kept pinned until https://github.com/pydantic/pydantic/issues/7689 is resolved
-    "PyYAML==6.0.1 ; python_version<'3.8'",
-    "requests>=2.31,<2.32 ; python_version<'3.8'",
-    "tornado>=6.2,<6.3 ; python_version<'3.8'",
-    "watchdog>=3.0.0,<4 ; python_version<'3.8'",
-    "websocket-client==1.6.1 ; python_version<'3.8'",
-    "werkzeug>=2.2.3,<2.3.0 ; python_version<'3.8'",
-    "wrapt>=1.16,<1.17 ; python_version<'3.8'",
-    "zeroconf>=0.131.0,<0.132 ; python_version<'3.8'",
+    "argon2_cffi>=21.3.0,<22",
+    "cachelib>=0.2,<0.3",
+    "Click>=8.0.3,<9",
+    "colorlog>=6,<7",
+    "emoji>=1.4.2,<2",
+    "feedparser>=6.0.8,<7",
+    "filetype>=1.0.7,<2",
+    "Flask-Assets>=2.0,<3",
+    "Flask-Babel>=2.0,<3",
+    "Flask-Login>=0.5,<0.6",  # flask-login doesn't use semver & breaks stuff on minor version increases
+    "Flask-Limiter>=2.6,<3",
+    "flask>=2.1,<2.2",  # flask 2.2 requires werkzeug 2.2+
+    "frozendict>=2.0,<3",
+    "future>=0.18.2,<1",  # not really needed anymore, but leaving in for py2/3 compat plugins
+    "markdown>=3.2.2,<4",
+    "netaddr>=0.8,<0.9",  # changelog hints at breaking changes on minor version increases
+    "netifaces>=0.11,<1",
+    "passlib>=1.7.4,<2",
+    "pathvalidate>=2.4.1,<3",
+    "pkginfo>=1.7.1,<2",
+    "psutil>=5.8,<6",
+    "pylru>=1.2,<2",
+    "pyserial>=3.4,<4",
+    "PyYAML>=5.4.1,<6",
+    "requests>=2.26.0,<3",
+    "sarge==0.1.6",
+    "semantic_version>=2.8.5,<3",
+    "sentry-sdk>=1.5.7,<2",
+    "tornado>=6.0.4,<7",
+    "watchdog>=1,<2",
+    "websocket-client>=1.2.1,<2",
+    "werkzeug>=2.0,<2.1",  # breaking changes can happen on minor version increases, flask-login 0.5 is incompatible with 2.1
+    "wrapt>=1.14,<1.15",
+    "zeroconf>=0.33,<0.34",  # breaking changes can happen on minor version increases
+    "zipstream-ng>=1.3.4,<2.0.0",
 ]
 vendored_deps = [
     "blinker>=1.8.0,<1.9.0 ; python_version>='3.8'",  # dependency of flask_principal, later versions require Python 3.9+

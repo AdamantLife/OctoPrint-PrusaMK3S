@@ -193,11 +193,14 @@ jobs:
       - name: 🎭 Run E2E
         uses: OctoPrint/actions/e2e@main
         with:
-          repository: ${{ github.repository }}
-          ref: ${{ github.ref }}
-          octoprint: ${{ env.INSTALLABLE }}
-          python: ${{ matrix.python }}
-          suffix: "-py${{ matrix.python }}"
+          name: cypress-screenshots
+          path: tests/cypress/screenshots
+      - name: ⬆ Upload videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: tests/cypress/videos
 
   publish-on-release:
     name: 📦 Publish build & source on GitHub release
@@ -292,7 +295,7 @@ jobs:
           OCTOPRINT_VERSION=$(echo $GITHUB_REF | cut -d/ -f3)
           echo "OCTOPRINT_VERSION=$OCTOPRINT_VERSION" >> $GITHUB_ENV
       - name: 🚀 Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPODISPATCH_TOKEN }}
           repository: OctoPrint/OctoPi-UpToDate

@@ -493,6 +493,64 @@ class Server:
             )
             self._logger.exception("Stacktrace follows:")
 
+    def _log_safe_mode_start(self, self_mode):
+        self_mode_file = os.path.join(
+            self._settings.getBaseFolder("data"), "last_safe_mode"
+        )
+        try:
+            with open(self_mode_file, "w+", encoding="utf-8") as f:
+                f.write(self_mode)
+        except Exception as ex:
+            self._logger.warn(f"Could not write safe mode file {self_mode_file}: {ex}")
+
+    def _create_socket_connection(self, session):
+        global printer, fileManager, analysisQueue, userManager, eventManager, connectivityChecker
+        return util.sockjs.PrinterStateConnection(
+            printer,
+            fileManager,
+            analysisQueue,
+            userManager,
+            groupManager,
+            eventManager,
+            pluginManager,
+            connectivityChecker,
+            session,
+        )
+
+    def _check_for_root(self):
+        if "geteuid" in dir(os) and os.geteuid() == 0:
+            exit("You should not run OctoPrint as root!")
+
+    def _get_locale(self):
+        global LANGUAGES
+
+        if "l10n" in request.values:
+            return Locale.negotiate([request.values["l10n"]], LANGUAGES)
+
+        if "X-Locale" in request.headers:
+            return Locale.negotiate([request.headers["X-Locale"]], LANGUAGES)
+
+        if hasattr(g, "identity") and g.identity:
+            userid = g.identity.id
+            try:
+                user_language = userManager.get_user_setting(
+                    userid, ("interface", "language")
+                )
+                if user_language is not None and not user_language == "_default":
+                    return Locale.negotiate([user_language], LANGUAGES)
+            except octoprint.access.users.UnknownUser:
+                pass
+
+        default_language = self._settings.get(["appearance", "defaultLanguage"])
+        if (
+            default_language is not None
+            and not default_language == "_default"
+            and default_language in LANGUAGES
+        ):
+            return Locale.negotiate([default_language], LANGUAGES)
+
+        return Locale.parse(request.accept_languages.best_match(LANGUAGES, default="en"))
+
     def _setup_heartbeat_logging(self):
         logger = logging.getLogger(__name__ + ".heartbeat")
 
