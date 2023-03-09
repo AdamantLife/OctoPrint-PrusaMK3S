@@ -31,7 +31,7 @@ SETUP_REQUIRES = []
 bundled_plugins = [
     "OctoPrint-FileCheck>=2021.2.23",
     "OctoPrint-FirmwareCheck>=2021.10.11",
-    "OctoPrint-PiSupport>=2022.3.28",
+    "OctoPrint-PiSupport>=2022.6.13",
 ]
 core_deps = [
     "argon2_cffi>=21.3.0,<22",
@@ -66,7 +66,7 @@ core_deps = [
     "watchdog>=1,<2",
     "websocket-client>=1.2.1,<2",
     "werkzeug>=2.0,<2.1",  # breaking changes can happen on minor version increases, flask-login 0.5 is incompatible with 2.1
-    "wrapt>=1.13.3,<1.14",
+    "wrapt>=1.14,<1.15",
     "zeroconf>=0.33,<0.34",  # breaking changes can happen on minor version increases
     "zipstream-ng>=1.3.4,<2.0.0",
 ]
